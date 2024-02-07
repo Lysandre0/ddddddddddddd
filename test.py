@@ -1,4 +1,7 @@
 import unittest
+import src.LecteurInterface
+import src.MoteurOuverture
+import src.PorteInterface
 
 class TestStringMethods(unittest.TestCase):
 
@@ -18,9 +21,9 @@ class TestStringMethods(unittest.TestCase):
 
     def CasNominal(self):
         # Étant donné un lecteur relié à une porte
-        lecteurFake = new lecteurFake()
-        porteSpy = new porteSpy()
-        moteurOuverture = new moteurOuverture()
+        lecteurFake = lecteurFake()
+        porteSpy = porteSpy()
+        moteurOuverture = moteurOuverture()
 
         # Lorsque un badge est détecter 
         lecteurFake.SimulerDetectionBadge()

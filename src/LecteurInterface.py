@@ -1,0 +1,3 @@
+class LecteurInterface():
+
+    def lecteurFake():
