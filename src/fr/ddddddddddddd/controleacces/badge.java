@@ -1,9 +1,9 @@
 package fr.ddddddddddddd.controleacces;
 
-public class badgeInterface {
+public class badge {
     boolean estBloqué;
 
-    public badgeInterface(boolean estBloqué){
+    public badge(boolean estBloqué){
         this.estBloqué = estBloqué;
     }
 

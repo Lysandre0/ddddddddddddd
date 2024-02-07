@@ -1,5 +1,5 @@
 import fr.ddddddddddddd.controleacces.MoteurOuverture;
-import fr.ddddddddddddd.controleacces.badgeInterface;
+import fr.ddddddddddddd.controleacces.badge;
 import fr.ddddddddddddd.controleacces.utilities.LecteurFake;
 import fr.ddddddddddddd.controleacces.utilities.PorteSpy;
 
@@ -17,7 +17,7 @@ public class ControleAccesTest {
     @Test
     public void CasNominal() {
         // ETANT DONNE un lecteur relié à une porte
-        var badge = new badgeInterface(false);
+        var badge = new badge(false);
         var porteSpy = new PorteSpy();
         var lecteurFake = new LecteurFake(porteSpy);
 
@@ -34,7 +34,7 @@ public class ControleAccesTest {
     @Test
     public void CasSansInterrogation(){
         // ETANT DONNE un lecteur relié à une porte
-        var badge = new badgeInterface(false);
+        var badge = new badge(false);
         var porteSpy = new PorteSpy();
         var lecteurFake = new LecteurFake(porteSpy);
 
@@ -61,7 +61,7 @@ public class ControleAccesTest {
     @Test
     public void CasPlusieursPortes(){
         // ETANT DONNE un lecteur relié à deux portes
-        var badge = new badgeInterface(false);
+        var badge = new badge(false);
         var porteSpy1 = new PorteSpy();
         var porteSpy2 = new PorteSpy();
         var lecteurFake = new LecteurFake(porteSpy1, porteSpy2);
@@ -80,7 +80,7 @@ public class ControleAccesTest {
     @Test
     public void CasPlusieursLecteurs() {
         // ETANT DONNE plusieurs lecteurs reliés à une porte
-        var badge = new badgeInterface(false);
+        var badge = new badge(false);
         var porteSpy = new PorteSpy();
         var lecteurFake1 = new LecteurFake(porteSpy);
         var lecteurFake2 = new LecteurFake(porteSpy);
@@ -98,7 +98,7 @@ public class ControleAccesTest {
     @Test
     public void CasPlusieursLecteursPlusieursPortes() {
         // ETANT DONNE plusieurs lecteurs reliés chacun à leur porte
-        var badge = new badgeInterface(false);
+        var badge = new badge(false);
         var porteSpy1 = new PorteSpy();
         var porteSpy2 = new PorteSpy();
         var lecteurFake1 = new LecteurFake(porteSpy1);
@@ -116,9 +116,9 @@ public class ControleAccesTest {
     }
 
     @Test
-    public void CasNominalBadgeInactif(){
+    public void CasNominalBadgeBloqué(){
         // ETANT DONNE un lecteur relié à une porte
-        var badge = new badgeInterface(true);
+        var badge = new badge(true);
         var porteSpy = new PorteSpy();
         var lecteurFake = new LecteurFake(porteSpy);
     
@@ -136,7 +136,7 @@ public class ControleAccesTest {
     @Test
     public void CasBadgeChangementÉtatDébloqué () {
         // ETANT DONNE un badge bloqué
-        var badge = new badgeInterface(true);
+        var badge = new badge(true);
         var porteSpy = new PorteSpy();
         var lecteurFake = new LecteurFake(porteSpy);
     
@@ -154,7 +154,7 @@ public class ControleAccesTest {
     @Test
     public void CasBadgeChangementÉtatBloqué () {
         // ETANT DONNE un badge débloqué
-        var badge = new badgeInterface(false);
+        var badge = new badge(false);
         var porteSpy = new PorteSpy();
         var lecteurFake = new LecteurFake(porteSpy);
 
@@ -167,5 +167,39 @@ public class ControleAccesTest {
 
         // ALORS la porte est verouillée
         assertFalse(porteSpy.VérifierOuvertureDemandée());
+    }
+
+    @Test
+    public void CasLecteurBipErreur() {
+        // ETANT DONNE un badge bloqué
+        var badge = new badge(true);
+        var porteSpy = new PorteSpy();
+        var lecteurFake = new LecteurFake(porteSpy);
+
+        // QUAND le badge est passé devant le lecteur
+        lecteurFake.SimulerDétectionBadge(badge);
+
+        // ET que ce lecteur est interrogé
+        MoteurOuverture.InterrogerLecteurs(lecteurFake);
+        
+        // ALORS le lecteur émets deux bips
+        assertTrue(lecteurFake.getNombreDeBip() == 2);
+    }
+
+    @Test
+    public void CasLecteurBip() {
+        // ETANT DONNE un lecteur relié à une porte
+        var badge = new badge(false);
+        var porteSpy = new PorteSpy();
+        var lecteurFake = new LecteurFake(porteSpy);
+
+        // QUAND le badge est passé devant le lecteur
+        lecteurFake.SimulerDétectionBadge(badge);
+
+        // ET que ce lecteur est interrogé
+        MoteurOuverture.InterrogerLecteurs(lecteurFake);
+
+        // ALORS le lecteur émets un bip
+        assertTrue(lecteurFake.getNombreDeBip() == 1);
     }
 }
