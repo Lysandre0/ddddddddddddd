@@ -202,4 +202,18 @@ public class ControleAccesTest {
         // ALORS le lecteur émets un bip
         assertTrue(lecteurFake.getNombreDeBip() == 1);
     }
+
+    @Test
+    public void CasSansDétectionBip(){
+        // ETANT DONNE un lecteur relié à une porte
+        var porteSpy = new PorteSpy();
+        var lecteurFake = new LecteurFake(porteSpy);
+
+        // QUAND on interroge ce lecteur sans qu'il ait détecté un badge
+        MoteurOuverture.InterrogerLecteurs(lecteurFake);
+
+        // ALORS la porte n'est pas deverrouillée
+        assertTrue(lecteurFake.getNombreDeBip() == 0);
+    }
+
 }
