@@ -2,12 +2,15 @@ package fr.ddddddddddddd.controleacces.utilities;
 
 import fr.ddddddddddddd.controleacces.LecteurInterface;
 import fr.ddddddddddddd.controleacces.PorteInterface;
+import fr.ddddddddddddd.controleacces.badgeInterface;
 
 public class LecteurFake implements LecteurInterface {
     private final PorteInterface[] _portes;
 
-    public void SimulerDétectionBadge() {
-        _aDétectéBadge = true;
+    public void SimulerDétectionBadge(badgeInterface badge) {
+        if(!(badge.estBloqué())){
+            _aDétectéBadge = true;
+        }
     }
 
     private boolean _aDétectéBadge = false;
