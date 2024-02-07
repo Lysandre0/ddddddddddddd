@@ -216,4 +216,21 @@ public class ControleAccesTest {
         assertTrue(lecteurFake.getNombreDeBip() == 0);
     }
 
+    @Test
+    public void CasPlusieursLecteursBip() {
+        // ETANT DONNE un lecteur relié à une porte
+        var badge = new badge(false);
+        var porteSpy = new PorteSpy();
+        var lecteurFake1 = new LecteurFake(porteSpy);
+        var lecteurFake2 = new LecteurFake(porteSpy);
+
+        // QUAND le badge est passé devant le lecteur
+        lecteurFake1.SimulerDétectionBadge(badge);
+
+        // ET que ce lecteur est interrogé
+        MoteurOuverture.InterrogerLecteurs(lecteurFake1);
+
+        // ALORS les autres lecteurs n'émettent pas de bip
+        assertTrue(lecteurFake2.getNombreDeBip() == 0);
+    }
 }
