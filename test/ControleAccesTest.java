@@ -191,7 +191,7 @@ public class ControleAccesTest {
         MoteurOuverture.InterrogerLecteurs(lecteurFake);
         
         // ALORS le lecteur émets deux bips
-        assertEquals(LecteurSpy.getNombreDeBip(),2);
+        assertEquals(LecteurSpy.verifieNombreDeBip(),2);
     }
 
     @Test
@@ -209,7 +209,7 @@ public class ControleAccesTest {
         MoteurOuverture.InterrogerLecteurs(lecteurFake);
 
         // ALORS le lecteur émets un bip
-        assertEquals(LecteurSpy.getNombreDeBip(),1);
+        assertEquals(LecteurSpy.verifieNombreDeBip(),1);
     }
 
     @Test
@@ -223,7 +223,7 @@ public class ControleAccesTest {
         MoteurOuverture.InterrogerLecteurs(lecteurFake);
 
         // ALORS la porte n'est pas deverrouillée
-        assertEquals(LecteurSpy.getNombreDeBip(),0);
+        assertEquals(LecteurSpy.verifieNombreDeBip(),0);
     }
 
     @Test
@@ -243,7 +243,7 @@ public class ControleAccesTest {
         MoteurOuverture.InterrogerLecteurs(lecteurFake1);
 
         // ALORS les autres lecteurs n'émettent pas de bip
-        assertEquals(LecteurSpy2.getNombreDeBip(),0);
+        assertEquals(LecteurSpy2.verifieNombreDeBip(),0);
     }
 
 
@@ -281,7 +281,7 @@ public class ControleAccesTest {
         // ET que ce lecteur est interrogé
         MoteurOuverture.InterrogerLecteurs(lecteurFake1);
 
-        // ALORS les lecteurs émet un flash rouge
+        // ALORS le lecteur émet un flash rouge
         flash flashRefus = new flash("rouge", 1);
         assertEquals(LecteurSpy.getCouleurFlash(), flashRefus.GetCouleur());
         assertEquals(LecteurSpy.getOccurrenceFlash(), flashRefus.GetOccurrence());

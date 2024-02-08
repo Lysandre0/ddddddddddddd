@@ -9,7 +9,6 @@ public class PorteSpy implements PorteInterface {
     }
 
     public PorteSpy(PorteDummy porteDummy) {
-        //TODO Auto-generated constructor stub
     }
 
     private boolean _ouvertureDemandée = false;

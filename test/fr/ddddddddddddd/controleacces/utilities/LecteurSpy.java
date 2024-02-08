@@ -1,10 +1,7 @@
 package fr.ddddddddddddd.controleacces.utilities;
 
-import java.lang.reflect.Array;
-
 import fr.ddddddddddddd.controleacces.LecteurInterface;
 import fr.ddddddddddddd.controleacces.PorteInterface;
-import jdk.jshell.spi.ExecutionControl;
 import fr.ddddddddddddd.controleacces.flash;
 
 public class LecteurSpy implements LecteurInterface {
@@ -17,23 +14,18 @@ public class LecteurSpy implements LecteurInterface {
         return _aDétectéBadge;
     }
 
-    public int getNombreDeBip(){
+    public int verifieNombreDeBip(){
         return this.nombreDeBip;
     }
-
-    public void SimulerUnBip(){
-        this.nombreDeBip++;
-    }
-
     @Override
     public void Bip() {
-        this.SimulerUnBip();
+        this.nombreDeBip++;
     }
     @Override
-    public void Flash(boolean T, boolean F, boolean E){
-      if(E){this.couleurFlash.SetCouleur("violet"); this.couleurFlash.SetOccurrence(2);}
-      else if(F){this.couleurFlash.SetCouleur("rouge"); this.couleurFlash.SetOccurrence(1);}
-      else if(T){this.couleurFlash.SetCouleur("vert"); this.couleurFlash.SetOccurrence(1);}
+    public void Flash(boolean estOK, boolean estRefus, boolean estErreur){
+      if(estErreur){this.couleurFlash.SetCouleur("violet"); this.couleurFlash.SetOccurrence(2);}
+      else if(estRefus){this.couleurFlash.SetCouleur("rouge"); this.couleurFlash.SetOccurrence(1);}
+      else if(estOK){this.couleurFlash.SetCouleur("vert"); this.couleurFlash.SetOccurrence(1);}
     };
 
     public flash getFlash(){

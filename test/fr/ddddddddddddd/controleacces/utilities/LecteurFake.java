@@ -6,26 +6,20 @@ import fr.ddddddddddddd.controleacces.badge;
 
 public class LecteurFake implements LecteurInterface {
     private final PorteSpy[] _portes;
+    boolean estOk = false;
+    boolean estRefus = false;
+    LecteurSpy lecteurSpy;
 
     public void SimulerDétectionBadge(badge badge, LecteurSpy lecteurSpy) {
+        this.lecteurSpy = lecteurSpy;
         this.SimulerUnBip(lecteurSpy);
-        boolean estOK =false;
-        boolean estRefus = false;
-        boolean estErreur = false;
         if(!(badge.estBloqué())){
             _aDétectéBadge = true;
-            estOK = true;
+            this.estOk = true;
         }else{
             this.SimulerUnBip(lecteurSpy);
-            estRefus = true;
-            
+            this.estRefus = true;
         }
-        for(var porte : this.getPortes()) {
-            if(!(porte.VérifierOuvertureDemandée())){
-                estErreur = true;
-            };
-        }
-        this.SimulerUnFlash(estOK,estRefus,estErreur,lecteurSpy);
     }
 
     public void SimulerDétectionBadge(badge badge){
@@ -39,13 +33,14 @@ public class LecteurFake implements LecteurInterface {
     }
 
     public void Bip(){
+        
     }
 
-    public void Flash(boolean T, boolean F, boolean E){ 
+    public void Flash(boolean estOK, boolean estRefus, boolean estErreur){ 
     };
 
-    public void SimulerUnFlash(boolean T, boolean F, boolean E, LecteurSpy LecteurSpy){ 
-        LecteurSpy.Flash(T, F, E);
+    public void SimulerUnFlash(boolean estErreur){ 
+        this.lecteurSpy.Flash(this.estOk,this.estRefus,estErreur);
     };
 
     private boolean _aDétectéBadge = false;

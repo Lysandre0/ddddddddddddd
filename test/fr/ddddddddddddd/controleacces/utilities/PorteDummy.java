@@ -16,5 +16,6 @@ public class PorteDummy implements PorteInterface {
 
     @Override
     public void Ouvrir() {
+        _ouvertureDemandée = false;
     }    
 }
