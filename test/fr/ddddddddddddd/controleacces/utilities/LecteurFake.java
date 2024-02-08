@@ -40,7 +40,9 @@ public class LecteurFake implements LecteurInterface {
     };
 
     public void SimulerUnFlash(boolean estErreur){ 
-        this.lecteurSpy.Flash(this.estOk,this.estRefus,estErreur);
+        if(this.lecteurSpy != null){
+            this.lecteurSpy.Flash(this.estOk,this.estRefus,estErreur);
+        }
     };
 
     private boolean _aDétectéBadge = false;

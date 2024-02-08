@@ -5,12 +5,14 @@ import fr.ddddddddddddd.controleacces.PorteInterface;
 import jdk.jshell.spi.ExecutionControl;
 
 public class PorteSpy implements PorteInterface {
+    private final PorteInterface decorated;
+
     public PorteSpy(){
+        this.decorated = this;
     }
-
-    public PorteSpy(PorteDummy porteDummy) {
+    public PorteSpy(PorteInterface decorated){
+        this.decorated = decorated;
     }
-
     private boolean _ouvertureDemandée = false;
 
     public boolean VérifierOuvertureDemandée() {
@@ -20,5 +22,6 @@ public class PorteSpy implements PorteInterface {
     @Override
     public void Ouvrir() {
         _ouvertureDemandée = true;
+        decorated.Ouvrir();
     }
 }
