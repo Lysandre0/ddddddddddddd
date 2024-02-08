@@ -4,12 +4,8 @@ import fr.ddddddddddddd.controleacces.LecteurInterface;
 import fr.ddddddddddddd.controleacces.PorteInterface;
 import jdk.jshell.spi.ExecutionControl;
 
-public class PorteSpy implements PorteInterface {
-    public PorteSpy(){
-    }
-
-    public PorteSpy(PorteDummy porteDummy) {
-        //TODO Auto-generated constructor stub
+public class PorteDummy implements PorteInterface {
+    public PorteDummy(){
     }
 
     private boolean _ouvertureDemandée = false;
@@ -20,6 +16,5 @@ public class PorteSpy implements PorteInterface {
 
     @Override
     public void Ouvrir() {
-        _ouvertureDemandée = true;
-    }
+    }    
 }

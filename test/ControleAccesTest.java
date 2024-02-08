@@ -1,14 +1,19 @@
 import fr.ddddddddddddd.controleacces.MoteurOuverture;
 import fr.ddddddddddddd.controleacces.badge;
+import fr.ddddddddddddd.controleacces.flash;
 import fr.ddddddddddddd.controleacces.utilities.LecteurFake;
 import fr.ddddddddddddd.controleacces.utilities.PorteSpy;
 import fr.ddddddddddddd.controleacces.utilities.LecteurSpy;
+import fr.ddddddddddddd.controleacces.utilities.PorteDummy;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Objects;
 
 public class ControleAccesTest {
     @Test
@@ -232,12 +237,94 @@ public class ControleAccesTest {
         var LecteurSpy2 = new LecteurSpy();
 
         // QUAND le badge est passé devant le lecteur
-        lecteurFake1.SimulerDétectionBadge(badge);
+        lecteurFake1.SimulerDétectionBadge(badge,LecteurSpy);
 
         // ET que ce lecteur est interrogé
-        MoteurOuverture.InterrogerLecteurs(lecteurFake1,LecteurSpy);
+        MoteurOuverture.InterrogerLecteurs(lecteurFake1);
 
         // ALORS les autres lecteurs n'émettent pas de bip
-        assertEquals(LecteurSpy.getNombreDeBip(),0);
+        assertEquals(LecteurSpy2.getNombreDeBip(),0);
+    }
+
+
+    @Test
+    public void CasLecteurFlashOK() {
+        // ETANT DONNE un lecteur relié à une porte
+        var badge = new badge(false);
+        var porteSpy = new PorteSpy();
+        var lecteurFake = new LecteurFake(porteSpy);
+        var LecteurSpy = new LecteurSpy();
+
+        // QUAND le badge est passé devant le lecteur
+        lecteurFake.SimulerDétectionBadge(badge,LecteurSpy);
+
+        // ET que ce lecteur est interrogé
+        MoteurOuverture.InterrogerLecteurs(lecteurFake);
+
+        // ALORS le lecteur émet un flash vert
+        flash flashOK = new flash("vert", 1);
+        assertEquals(LecteurSpy.getCouleurFlash(), flashOK.GetCouleur());
+        assertEquals(LecteurSpy.getOccurrenceFlash(), flashOK.GetOccurrence());
+    }
+
+    @Test
+    public void CasLecteurFlashRefus() {
+        // ETANT DONNE un lecteur relié à une porte
+        var badge = new badge(true);
+        var porteSpy = new PorteSpy();
+        var lecteurFake1 = new LecteurFake(porteSpy);
+        var LecteurSpy = new LecteurSpy();
+
+        // QUAND le badge est passé devant le lecteur
+        lecteurFake1.SimulerDétectionBadge(badge,LecteurSpy);
+
+        // ET que ce lecteur est interrogé
+        MoteurOuverture.InterrogerLecteurs(lecteurFake1);
+
+        // ALORS les lecteurs émet un flash rouge
+        flash flashRefus = new flash("rouge", 1);
+        assertEquals(LecteurSpy.getCouleurFlash(), flashRefus.GetCouleur());
+        assertEquals(LecteurSpy.getOccurrenceFlash(), flashRefus.GetOccurrence());
+
+    }
+
+    @Test
+    public void CasLecteurFlashErreur() {
+        // ETANT DONNE un lecteur relié à une porte
+        var badge = new badge(false);
+        var PorteDummy = new PorteSpy(new PorteDummy());
+        var lecteurFake = new LecteurFake(PorteDummy);
+        var LecteurSpy = new LecteurSpy();
+
+        // QUAND le badge est passé devant le lecteur
+        lecteurFake.SimulerDétectionBadge(badge,LecteurSpy);
+
+        // ET que ce lecteur est interrogé
+        MoteurOuverture.InterrogerLecteurs(lecteurFake);
+
+        // ALORS le lecteur émet 2 flash violet
+        flash flashErreur = new flash("violet", 2);
+        assertEquals(LecteurSpy.getCouleurFlash(), flashErreur.GetCouleur());
+        assertEquals(LecteurSpy.getOccurrenceFlash(), flashErreur.GetOccurrence());
+    }
+
+    @Test
+    public void CasLecteurFlashErreurBadgeBloqué() {
+        // ETANT DONNE un lecteur relié à une porte ET un badge bloqué
+        var badge = new badge(true);
+        var PorteDummy = new PorteSpy(new PorteDummy());
+        var lecteurFake = new LecteurFake(PorteDummy);
+        var LecteurSpy = new LecteurSpy();
+
+        // QUAND le badge est passé devant le lecteur
+        lecteurFake.SimulerDétectionBadge(badge,LecteurSpy);
+
+        // ET que ce lecteur est interrogé
+        MoteurOuverture.InterrogerLecteurs(lecteurFake);
+
+        // ALORS le lecteur émet 2 flash violet
+        flash flashErreur = new flash("violet", 2);
+        assertEquals(LecteurSpy.getCouleurFlash(), flashErreur.GetCouleur());
+        assertEquals(LecteurSpy.getOccurrenceFlash(), flashErreur.GetOccurrence());
     }
 }

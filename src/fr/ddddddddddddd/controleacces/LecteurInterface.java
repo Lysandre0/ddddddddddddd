@@ -6,4 +6,6 @@ public interface LecteurInterface {
     void Bip();
 
     PorteInterface[] getPortes();
+
+    void Flash(boolean T, boolean F, boolean E);
 }
