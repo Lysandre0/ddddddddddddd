@@ -2,9 +2,11 @@ import fr.ddddddddddddd.controleacces.MoteurOuverture;
 import fr.ddddddddddddd.controleacces.badge;
 import fr.ddddddddddddd.controleacces.utilities.LecteurFake;
 import fr.ddddddddddddd.controleacces.utilities.PorteSpy;
+import fr.ddddddddddddd.controleacces.utilities.LecteurSpy;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -175,15 +177,16 @@ public class ControleAccesTest {
         var badge = new badge(true);
         var porteSpy = new PorteSpy();
         var lecteurFake = new LecteurFake(porteSpy);
+        var LecteurSpy = new LecteurSpy();
 
         // QUAND le badge est passé devant le lecteur
-        lecteurFake.SimulerDétectionBadge(badge);
+        lecteurFake.SimulerDétectionBadge(badge,LecteurSpy);
 
         // ET que ce lecteur est interrogé
         MoteurOuverture.InterrogerLecteurs(lecteurFake);
         
         // ALORS le lecteur émets deux bips
-        assertTrue(lecteurFake.getNombreDeBip() == 2);
+        assertEquals(LecteurSpy.getNombreDeBip(),2);
     }
 
     @Test
@@ -192,15 +195,16 @@ public class ControleAccesTest {
         var badge = new badge(false);
         var porteSpy = new PorteSpy();
         var lecteurFake = new LecteurFake(porteSpy);
+        var LecteurSpy = new LecteurSpy();
 
         // QUAND le badge est passé devant le lecteur
-        lecteurFake.SimulerDétectionBadge(badge);
+        lecteurFake.SimulerDétectionBadge(badge,LecteurSpy);
 
         // ET que ce lecteur est interrogé
         MoteurOuverture.InterrogerLecteurs(lecteurFake);
 
         // ALORS le lecteur émets un bip
-        assertTrue(lecteurFake.getNombreDeBip() == 1);
+        assertEquals(LecteurSpy.getNombreDeBip(),1);
     }
 
     @Test
@@ -208,12 +212,13 @@ public class ControleAccesTest {
         // ETANT DONNE un lecteur relié à une porte
         var porteSpy = new PorteSpy();
         var lecteurFake = new LecteurFake(porteSpy);
+        var LecteurSpy = new LecteurSpy();
 
         // QUAND on interroge ce lecteur sans qu'il ait détecté un badge
         MoteurOuverture.InterrogerLecteurs(lecteurFake);
 
         // ALORS la porte n'est pas deverrouillée
-        assertTrue(lecteurFake.getNombreDeBip() == 0);
+        assertEquals(LecteurSpy.getNombreDeBip(),0);
     }
 
     @Test
@@ -223,14 +228,16 @@ public class ControleAccesTest {
         var porteSpy = new PorteSpy();
         var lecteurFake1 = new LecteurFake(porteSpy);
         var lecteurFake2 = new LecteurFake(porteSpy);
+        var LecteurSpy = new LecteurSpy();
+        var LecteurSpy2 = new LecteurSpy();
 
         // QUAND le badge est passé devant le lecteur
         lecteurFake1.SimulerDétectionBadge(badge);
 
         // ET que ce lecteur est interrogé
-        MoteurOuverture.InterrogerLecteurs(lecteurFake1);
+        MoteurOuverture.InterrogerLecteurs(lecteurFake1,LecteurSpy);
 
         // ALORS les autres lecteurs n'émettent pas de bip
-        assertTrue(lecteurFake2.getNombreDeBip() == 0);
+        assertEquals(LecteurSpy.getNombreDeBip(),0);
     }
 }

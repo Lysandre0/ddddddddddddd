@@ -6,22 +6,26 @@ import fr.ddddddddddddd.controleacces.badge;
 
 public class LecteurFake implements LecteurInterface {
     private final PorteInterface[] _portes;
-    private int nombreDeBip = 0;
-    public void SimulerDétectionBadge(badge badge) {
-        SimulerUnBip();
+
+    public void SimulerDétectionBadge(badge badge, LecteurSpy lecteurSpy) {
+        this.SimulerUnBip(lecteurSpy);
         if(!(badge.estBloqué())){
             _aDétectéBadge = true;
         }else{
-            SimulerUnBip();
+            this.SimulerUnBip(lecteurSpy);
+        }
+    }
+    public void SimulerDétectionBadge(badge badge){
+        if(!(badge.estBloqué())){
+            _aDétectéBadge = true;
         }
     }
 
-    public int getNombreDeBip(){
-        return this.nombreDeBip;
+    public void SimulerUnBip(LecteurSpy LecteurSpy){
+        LecteurSpy.SimulerUnBip();
     }
 
-    public void SimulerUnBip(){
-        this.nombreDeBip++;
+    public void Bip(){
     }
 
     private boolean _aDétectéBadge = false;
