@@ -289,7 +289,7 @@ public class ControleAccesTest {
     }
 
     @Test
-    public void CasLecteurFlashErreur() {
+    public void CasLecteurFlashErreurQuandOuverture() {
         // ETANT DONNE un lecteur relié à une porte
         var badge = new badge(false);
         var PorteDummy = new PorteSpy(new PorteDummy());
@@ -309,7 +309,7 @@ public class ControleAccesTest {
     }
 
     @Test
-    public void CasLecteurFlashErreurBadgeBloqué() {
+    public void CasLecteurFlashErreurQuandOuvertureBadgeBloqué() {
         // ETANT DONNE un lecteur relié à une porte ET un badge bloqué
         var badge = new badge(true);
         var PorteDummy = new PorteSpy(new PorteDummy());
@@ -322,8 +322,8 @@ public class ControleAccesTest {
         // ET que ce lecteur est interrogé
         MoteurOuverture.InterrogerLecteurs(lecteurFake);
 
-        // ALORS le lecteur émet 2 flash violet
-        flash flashErreur = new flash("violet", 2);
+        // ALORS le lecteur émet 1 flash rouge
+        flash flashErreur = new flash("rouge", 1);
         assertEquals(LecteurSpy.getCouleurFlash(), flashErreur.GetCouleur());
         assertEquals(LecteurSpy.getOccurrenceFlash(), flashErreur.GetOccurrence());
     }

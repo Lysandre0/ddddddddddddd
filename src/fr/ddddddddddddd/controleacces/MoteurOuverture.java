@@ -8,8 +8,9 @@ public class MoteurOuverture {
         var estErreur = false;
             if(lecteur.ADétectéBadge()){
                 for(var porte : lecteur.getPortes()){
-                    porte.Ouvrir();
-                    if(!porte.VérifierOuvertureDemandée()){
+                    try {
+                        porte.Ouvrir();
+                    } catch (Exception e) {
                         estErreur = true;
                     }
                 }
