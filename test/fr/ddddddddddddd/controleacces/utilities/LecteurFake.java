@@ -1,7 +1,6 @@
 package fr.ddddddddddddd.controleacces.utilities;
 
 import fr.ddddddddddddd.controleacces.LecteurInterface;
-import fr.ddddddddddddd.controleacces.PorteInterface;
 import fr.ddddddddddddd.controleacces.badge;
 
 public class LecteurFake implements LecteurInterface {
@@ -16,9 +15,11 @@ public class LecteurFake implements LecteurInterface {
         if(!(badge.estBloqué())){
             _aDétectéBadge = true;
             this.estOk = true;
+            //this.SimulerUnFlash(false,true,false);
         }else{
             this.SimulerUnBip(lecteurSpy);
             this.estRefus = true;
+            this.SimulerUnFlash(true,false,false);
         }
     }
 
@@ -36,12 +37,15 @@ public class LecteurFake implements LecteurInterface {
         
     }
 
-    public void Flash(boolean estOK, boolean estRefus, boolean estErreur){ 
+    public void Flash(boolean R, boolean G, boolean B){ 
+        if(this.lecteurSpy != null){
+            this.lecteurSpy.Flash(R,G,B);
+        }
     };
 
-    public void SimulerUnFlash(boolean estErreur){ 
+    public void SimulerUnFlash(boolean R, boolean G, boolean B){ 
         if(this.lecteurSpy != null){
-            this.lecteurSpy.Flash(this.estOk,this.estRefus,estErreur);
+            this.lecteurSpy.Flash(R,G,B);
         }
     };
 

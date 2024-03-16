@@ -9,11 +9,9 @@ import fr.ddddddddddddd.controleacces.utilities.PorteDummy;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Objects;
 
 public class ControleAccesTest {
     @Test
@@ -262,9 +260,11 @@ public class ControleAccesTest {
         MoteurOuverture.InterrogerLecteurs(lecteurFake);
 
         // ALORS le lecteur émet un flash vert
-        flash flashOK = new flash("vert", 1);
-        assertEquals(LecteurSpy.getCouleurFlash(), flashOK.GetCouleur());
-        assertEquals(LecteurSpy.getOccurrenceFlash(), flashOK.GetOccurrence());
+        flash flashOK = new flash(false,true,false);
+        assertEquals(LecteurSpy.GetR(), flashOK.GetR());
+        assertEquals(LecteurSpy.GetG(), flashOK.GetG());
+        assertEquals(LecteurSpy.GetB(), flashOK.GetB());
+        assertEquals(LecteurSpy.GetFlashOccurence(), flashOK.GetOccurence());
     }
 
     @Test
@@ -282,9 +282,11 @@ public class ControleAccesTest {
         MoteurOuverture.InterrogerLecteurs(lecteurFake1);
 
         // ALORS le lecteur émet un flash rouge
-        flash flashRefus = new flash("rouge", 1);
-        assertEquals(LecteurSpy.getCouleurFlash(), flashRefus.GetCouleur());
-        assertEquals(LecteurSpy.getOccurrenceFlash(), flashRefus.GetOccurrence());
+        flash flashRefus = new flash(true,false,false);
+        assertEquals(LecteurSpy.GetR(), flashRefus.GetR());
+        assertEquals(LecteurSpy.GetG(), flashRefus.GetG());
+        assertEquals(LecteurSpy.GetB(), flashRefus.GetB());
+        assertEquals(LecteurSpy.GetFlashOccurence(), flashRefus.GetOccurence());
 
     }
 
@@ -302,10 +304,12 @@ public class ControleAccesTest {
         // ET que ce lecteur est interrogé
         MoteurOuverture.InterrogerLecteurs(lecteurFake);
 
-        // ALORS le lecteur émet 2 flash violet
-        flash flashErreur = new flash("violet", 2);
-        assertEquals(LecteurSpy.getCouleurFlash(), flashErreur.GetCouleur());
-        assertEquals(LecteurSpy.getOccurrenceFlash(), flashErreur.GetOccurrence());
+        // ALORS le lecteur émet 2 flash violet 
+        flash flashErreur = new flash(true,false,true);
+        assertEquals(LecteurSpy.GetR(), flashErreur.GetR());
+        assertEquals(LecteurSpy.GetG(), flashErreur.GetG());
+        assertEquals(LecteurSpy.GetB(), flashErreur.GetB());
+        assertEquals(LecteurSpy.GetFlashOccurence(), flashErreur.GetOccurence());
     }
 
     @Test
@@ -323,8 +327,10 @@ public class ControleAccesTest {
         MoteurOuverture.InterrogerLecteurs(lecteurFake);
 
         // ALORS le lecteur émet 1 flash rouge
-        flash flashErreur = new flash("rouge", 1);
-        assertEquals(LecteurSpy.getCouleurFlash(), flashErreur.GetCouleur());
-        assertEquals(LecteurSpy.getOccurrenceFlash(), flashErreur.GetOccurrence());
+        flash flashErreur = new flash(true,false,false);
+        assertEquals(LecteurSpy.GetR(), flashErreur.GetR());
+        assertEquals(LecteurSpy.GetG(), flashErreur.GetG());
+        assertEquals(LecteurSpy.GetB(), flashErreur.GetB());
+        assertEquals(LecteurSpy.GetFlashOccurence(), flashErreur.GetOccurence());
     }
 }

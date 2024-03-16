@@ -1,37 +1,47 @@
 package fr.ddddddddddddd.controleacces;
 
 public class flash {
-    private String couleur;
-    private int occurrence;
+    private boolean R;
+    private boolean G;
+    private boolean B;
 
-    public flash (String couleur, int occurrence) {
-        this.couleur = couleur;
-        this.occurrence = occurrence;
+    public flash (boolean R, boolean G, boolean B) {
+        this.R = R;
+        this.G = G;
+        this.B = B;
     }
 
-    public void SetCouleur(String couleur){
-        this.couleur = couleur;
+    public void SetCouleur(boolean R, boolean G, boolean B){
+        this.R = R;
+        this.G = G;
+        this.B = B;
     }
 
-    public void SetOccurrence(int occurrence){
-        this.occurrence = occurrence;
+    public void SetFlash(boolean R, boolean G, boolean B){
+        this.R = R;
+        this.G = G;
+        this.B = B;
     }
 
-    public void setflash(String couleur, int occurrence){
-        this.couleur = couleur;
-        this.occurrence = occurrence;
+    public Boolean GetR(){
+        return this.R;
     }
-
-    public String GetCouleur(){
-        return this.couleur;
+    public Boolean GetG(){
+        return this.G;
     }
-
-    public int GetOccurrence(){
-        return this.occurrence;
+    public Boolean GetB(){
+        return this.B;
     }
-
-    public flash getflash(){
+    public flash GetFlash(){
         return this;
+    }
+
+    public int GetOccurence(){
+        if(this.R && this.B){
+            return 2;
+        }else{
+            return 1;
+        }
     }
     
 }

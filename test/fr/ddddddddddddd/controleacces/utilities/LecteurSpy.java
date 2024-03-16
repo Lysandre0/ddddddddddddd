@@ -7,7 +7,7 @@ import fr.ddddddddddddd.controleacces.flash;
 public class LecteurSpy implements LecteurInterface {
     private int nombreDeBip = 0;
     private boolean _aDétectéBadge = false;
-    private flash couleurFlash = new flash("violet", 2);
+    private flash couleurFlash = new flash(false,false,false);
 
     @Override
     public boolean ADétectéBadge() {
@@ -22,20 +22,28 @@ public class LecteurSpy implements LecteurInterface {
         this.nombreDeBip++;
     }
     @Override
-    public void Flash(boolean estOK, boolean estRefus, boolean estErreur){
-      if(estErreur){this.couleurFlash.SetCouleur("violet"); this.couleurFlash.SetOccurrence(2);}
-      else if(estRefus){this.couleurFlash.SetCouleur("rouge"); this.couleurFlash.SetOccurrence(1);}
-      else if(estOK){this.couleurFlash.SetCouleur("vert"); this.couleurFlash.SetOccurrence(1);}
+    public void Flash(boolean R, boolean G, boolean B){
+      this.couleurFlash.SetCouleur(R, G, B);
     };
 
     public flash getFlash(){
         return this.couleurFlash;
     }
-    public String getCouleurFlash(){
-        return this.couleurFlash.GetCouleur();
+    public Boolean GetR(){
+        return this.couleurFlash.GetR();
     }
-    public int getOccurrenceFlash(){
-        return this.couleurFlash.GetOccurrence();
+    public Boolean GetG(){
+        return this.couleurFlash.GetG();
+    }
+    public Boolean GetB(){
+        return this.couleurFlash.GetB();
+    }
+    public int GetFlashOccurence(){
+        if(this.couleurFlash.GetR() && this.couleurFlash.GetB()){
+            return 2;
+        }else{
+            return 1;
+        }
     }
 
     @Override

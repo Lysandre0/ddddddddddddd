@@ -7,5 +7,5 @@ public interface LecteurInterface {
 
     PorteInterface[] getPortes();
 
-    void Flash(boolean T, boolean F, boolean E);
+    void Flash(boolean R, boolean G, boolean B);
 }
